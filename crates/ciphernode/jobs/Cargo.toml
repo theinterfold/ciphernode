@@ -1,0 +1,41 @@
+[package]
+name = "e3-jobs"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Runs the v2 node's jobs: the cryptography and proofs that protocol work asks for"
+repository.workspace = true
+
+[features]
+# What a requester does outside the node, for simulator and integration tests.
+testing = []
+
+[dependencies]
+e3-bfv-client = { workspace = true }
+e3-blobs = { workspace = true }
+e3-protocol = { workspace = true }
+e3-committee = { workspace = true }
+e3-committee-hash = { workspace = true }
+e3-crypto = { workspace = true }
+e3-fhe-params = { workspace = true, features = ["abi-encoding"] }
+e3-polynomial = { workspace = true }
+e3-polynomial-fhe = { workspace = true }
+e3-trbfv = { workspace = true }
+e3-utils = { workspace = true }
+e3-zk-config = { workspace = true }
+e3-zk-prover = { workspace = true }
+e3-zk-witness = { workspace = true }
+alloy-primitives = { workspace = true }
+bincode = { workspace = true }
+fhe = { workspace = true }
+fhe-traits = { workspace = true }
+ndarray = { workspace = true }
+num-bigint = { workspace = true }
+rand = { workspace = true }
+rand_core = { workspace = true }
+rayon = { workspace = true }
+serde = { workspace = true }
+thiserror = { workspace = true }
+
+[dev-dependencies]
+tokio = { workspace = true }

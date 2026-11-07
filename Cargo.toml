@@ -1,0 +1,169 @@
+[workspace]
+members = [
+  "crates/protocol",
+  "crates/ciphernode/engine",
+  "crates/state/journal",
+  "crates/state/blobs",
+  "crates/ciphernode/chain",
+  "crates/ciphernode/p2p",
+  "crates/ciphernode/jobs",
+  "crates/ciphernode/node",
+  "crates/testing/sim",
+]
+resolver = "3"
+
+[workspace.package]
+version = "0.20.0-dev.3"
+edition = "2021"
+license = "LGPL-3.0-only"
+description = "E3 — Encrypted Execution Environments"
+repository = "https://github.com/theinterfold/ciphernode"
+
+[workspace.dependencies]
+# The v2 node crates.
+e3-protocol = { version = "0.20.0-dev.3", path = "./crates/protocol" }
+e3-blobs = { version = "0.20.0-dev.3", path = "./crates/state/blobs" }
+e3-chain = { version = "0.20.0-dev.3", path = "./crates/ciphernode/chain" }
+e3-engine = { version = "0.20.0-dev.3", path = "./crates/ciphernode/engine" }
+e3-jobs = { version = "0.20.0-dev.3", path = "./crates/ciphernode/jobs" }
+e3-journal = { version = "0.20.0-dev.3", path = "./crates/state/journal" }
+e3-node = { version = "0.20.0-dev.3", path = "./crates/ciphernode/node" }
+e3-p2p = { version = "0.20.0-dev.3", path = "./crates/ciphernode/p2p" }
+# Shared crates, pinned to one commit of theinterfold/interfold. Bump `rev` on every line together.
+e3-bfv-client = { git = "https://github.com/theinterfold/interfold", rev = "529f2cbfcab67bb965dc6dd331ff9669d89dabbd" }
+e3-ciphernode-config = { git = "https://github.com/theinterfold/interfold", rev = "529f2cbfcab67bb965dc6dd331ff9669d89dabbd" }
+e3-committee = { git = "https://github.com/theinterfold/interfold", rev = "529f2cbfcab67bb965dc6dd331ff9669d89dabbd" }
+e3-committee-hash = { git = "https://github.com/theinterfold/interfold", rev = "529f2cbfcab67bb965dc6dd331ff9669d89dabbd" }
+e3-crypto = { git = "https://github.com/theinterfold/interfold", rev = "529f2cbfcab67bb965dc6dd331ff9669d89dabbd" }
+e3-data-availability = { git = "https://github.com/theinterfold/interfold", rev = "529f2cbfcab67bb965dc6dd331ff9669d89dabbd" }
+e3-evm-contracts = { git = "https://github.com/theinterfold/interfold", rev = "529f2cbfcab67bb965dc6dd331ff9669d89dabbd" }
+e3-evm-transactions = { git = "https://github.com/theinterfold/interfold", rev = "529f2cbfcab67bb965dc6dd331ff9669d89dabbd" }
+e3-fhe-params = { git = "https://github.com/theinterfold/interfold", rev = "529f2cbfcab67bb965dc6dd331ff9669d89dabbd" }
+e3-polynomial = { git = "https://github.com/theinterfold/interfold", rev = "529f2cbfcab67bb965dc6dd331ff9669d89dabbd" }
+e3-polynomial-fhe = { git = "https://github.com/theinterfold/interfold", rev = "529f2cbfcab67bb965dc6dd331ff9669d89dabbd" }
+e3-trbfv = { git = "https://github.com/theinterfold/interfold", rev = "529f2cbfcab67bb965dc6dd331ff9669d89dabbd" }
+e3-utils = { git = "https://github.com/theinterfold/interfold", rev = "529f2cbfcab67bb965dc6dd331ff9669d89dabbd" }
+e3-zk-config = { git = "https://github.com/theinterfold/interfold", rev = "529f2cbfcab67bb965dc6dd331ff9669d89dabbd" }
+e3-zk-prover = { git = "https://github.com/theinterfold/interfold", rev = "529f2cbfcab67bb965dc6dd331ff9669d89dabbd" }
+e3-zk-witness = { git = "https://github.com/theinterfold/interfold", rev = "529f2cbfcab67bb965dc6dd331ff9669d89dabbd" }
+
+# External crates, as in theinterfold/interfold.
+
+actix-web = "=4.11.0"
+aes-gcm = "=0.10.3"
+alloy = { version = "=1.0.41", features = ["node-bindings", "full"] }
+alloy-contract = { version = "=1.0.41", default-features = false }
+alloy-json-abi = "=1.4.1"
+alloy-primitives = { version = "=1.4.1", default-features = false, features = [
+  "rlp",
+  "serde",
+  "std",
+] }
+alloy-sol-types = "=1.4.1"
+alloy-signer = "=1.0.41"
+alloy-signer-local = "=1.0.41"
+alloy-dyn-abi = "=1.4.1"
+avail-rust-client = "=0.5.1"
+argon2 = "=0.5.3"
+ark-ff = "0.5.0"
+ark-bn254 = "0.5.0"
+anyhow = "=1.0.98"
+async-std = { version = "=1.13.1", features = ["attributes"] }
+async-trait = "=0.1.88"
+async-recursion = "=1.1.1"
+bincode = "=1.3.3"
+bloom = "=0.3.2"
+bs58 = "=0.5.1"
+base64 = "=0.22.1"
+clap = { version = "=4.6.0", features = ["derive"] }
+chrono = { version = "=0.4.41", features = ["serde"] }
+commitlog = "=0.2.0"
+compile-time = "=0.2.0"
+derivative = "=2.2.0"
+dirs = "=5.0.1"
+dialoguer = "=0.11.0"
+eyre = { version = "=0.6.12" }
+fhe = { git = "https://github.com/gnosisguild/fhe.rs", tag = "v0.4.2", features = ["experimental-mbfv"] }
+fhe-traits = { git = "https://github.com/gnosisguild/fhe.rs", tag = "v0.4.2" }
+fhe-math = { git = "https://github.com/gnosisguild/fhe.rs", tag = "v0.4.2" }
+fhe-util = { git = "https://github.com/gnosisguild/fhe.rs", tag = "v0.4.2" }
+figment = { version = "=0.10.19", features = ["env", "yaml", "test"] }
+futures = "=0.3.31"
+futures-util = "=0.3.31"
+glob = "=0.3.2"
+git2 = "=0.20.2"
+hex = "=0.4.3"
+lazy_static = "=1.5.0"
+num = "=0.4.3"
+num-bigint = { version = "=0.5.1" }
+num-traits = "=0.2.19"
+num-integer = "0.1.46"
+ndarray = { version = "=0.17.2", features = ["serde"] }
+once_cell = "=1.21.3"
+opentelemetry = "=0.29.0"
+opentelemetry-otlp = { version = "=0.29.0", features = ["grpc-tonic"] }
+opentelemetry_sdk = "=0.29.0"
+opentelemetry-stdout = "=0.29.0"
+path-clean = "=1.0.1"
+petname = "=2.0.2"
+phf = { version = "=0.11.3", features = ["macros"] }
+proptest = "=1.11.0"
+proc-macro2 = "=1.0.106"
+quote = "=1.0.45"
+rand_chacha = "=0.9.0"
+redb = "=4.5.0"
+rand = "=0.9.5"
+rand_core = "=0.9.5"
+rayon = "=1.10.0"
+regex = "=1.11.1"
+reqwest = { version = "=0.12.22", features = ["json"] }
+serde = { version = "=1.0.228", features = ["derive"] }
+serde-wasm-bindgen = "=0.6.5"
+serde_bytes = "=0.11.19"
+serde_json = "=1.0.145"
+serial_test = "=3.2.0"
+serde_yaml = "=0.9.34"
+sha2 = "=0.10.9"
+shellexpand = "=3.1.1"
+sled = "=0.34.7"
+strum = { version = "=0.27.2", features = ["derive"] }
+syn = { version = "=2.0.117", features = ["full"] }
+tempfile = "=3.20.0"
+thiserror =  { version = "=1.0.69" }
+tokio = { version = "=1.46.1", features = ["full"] }
+toml = "=0.8.23"
+tracing = "=0.1.41"
+tracing-opentelemetry = "=0.30.0"
+tracing-subscriber = { version = "=0.3.20", features = ["env-filter", "time"] }
+tracing-test = { version = "=0.2.5", features = ["no-env-filter"] }
+url = "=2.5.4"
+vfs = { git = "https://github.com/ryardley/rust-vfs.git", features = ["async-vfs"] }
+libc = "=0.2.180"
+libp2p = { version = "=0.56.0", features = [
+  "gossipsub",
+  "identify",
+  "dns",
+  "ed25519",
+  "kad",
+  "macros",
+  "mdns",
+  "ping",
+  "quic",
+  "tokio",
+  "request-response",
+  "cbor"
+]}
+zeroize = "=1.9.0"
+
+# Debug tests recover and sign many operator signatures (the v2 simulator runs whole committees);
+# optimized curve and hash crates make them about six times faster.
+[profile.dev.package.k256]
+opt-level = 3
+[profile.dev.package.ecdsa]
+opt-level = 3
+[profile.dev.package.elliptic-curve]
+opt-level = 3
+[profile.dev.package.crypto-bigint]
+opt-level = 3
+[profile.dev.package.tiny-keccak]
+opt-level = 3

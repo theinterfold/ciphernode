@@ -1,0 +1,3 @@
+[env]
+# The prover's build script otherwise compiles its test fixtures with nargo and bb.
+E3_ZK_PROVER_SKIP_FIXTURE_BUILD = "1"

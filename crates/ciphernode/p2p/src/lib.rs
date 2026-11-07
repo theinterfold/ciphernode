@@ -1,0 +1,46 @@
+// SPDX-License-Identifier: LGPL-3.0-only
+//
+// This file is provided WITHOUT ANY WARRANTY;
+// without even the implied warranty of MERCHANTABILITY
+// or FITNESS FOR A PARTICULAR PURPOSE.
+
+//! The v2 node's network: operator-signed peer messages, and the blobs they name, which a node
+//! fetches from the message's publisher once its machine admits the message.
+
+mod inbound_ip_limits;
+mod swarm;
+
+pub use swarm::{P2p, P2pConfig, P2pError};
+
+use alloy_primitives::Address;
+use e3_protocol::{node::PeerMessage, wire::Envelope};
+use std::{collections::BTreeSet, future::Future};
+
+/// What the node needs from the network. Inbound, an adapter delivers each peer message whose
+/// envelope opens and that is for this node, before it fetches any blob the message names.
+pub trait Network: Send + Sync + 'static {
+    /// Sends `envelope` to the other nodes; its blobs are in this node's store.
+    fn publish(&self, envelope: Envelope) -> impl Future<Output = Result<(), NetworkError>> + Send;
+
+    /// Brings the blobs `message` names into the node's store, from the peers that sent it.
+    fn fetch(&self, message: PeerMessage) -> impl Future<Output = Result<(), NetworkError>> + Send;
+
+    /// Takes messages only from `senders` from now on: another sender's message is neither
+    /// delivered nor passed on.
+    fn admit(&self, senders: BTreeSet<Address>);
+}
+
+#[derive(Clone, Debug, thiserror::Error)]
+pub enum NetworkError {
+    #[error("publishing: {0}")]
+    Publish(String),
+    /// The sender's re-send brings the message, and the peers to ask, again.
+    #[error("no peer that sent the message gave its blobs")]
+    Unavailable,
+    #[error("too many blob bytes are on their way")]
+    Busy,
+    #[error("storing a blob: {0}")]
+    Store(String),
+    #[error("the network stopped")]
+    Stopped,
+}
