@@ -33,7 +33,7 @@ The toolchain comes from `rust-toolchain.toml`. The first build fetches `theinte
 ## Shared crates
 
 The crypto, ZK, contract-binding and configuration crates come from `theinterfold/interfold` at one
-commit: the `rev` in `Cargo.toml`, the head of its `refactor/ciphernode-v2` branch. To move to
+commit: the `rev` in `Cargo.toml`, a commit on its `refactor/ciphernode-v2` branch. To move to
 another commit, change `rev` on every line together. A branch or tag in `theinterfold/interfold`
 must keep the pinned commit, or Cargo cannot fetch it.
 
