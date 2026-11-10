@@ -387,6 +387,30 @@ Each rule is checkable in review.
   promise. Deleting a key is a deliberate act by hand. A folder of a profile that the configuration
   no longer names stays.
 
+- **D57. Whether a call goes out follows the reader; its gas follows where it will run.** A call is
+  checked against the confirmed head, so the writer and the reader agree on what has happened. Its
+  gas is estimated at the newest block, the state it will run on, because a change in the last few
+  blocks can change the path the call takes: an operator that registered a moment ago runs its
+  release acknowledgement through a status refresh the confirmed state skips. When the newest blocks
+  refuse a call that the confirmed state takes, the node neither sends it nor counts it as done:
+  those blocks can still be replaced. The acknowledgement goes through the same delivery as every
+  other call, so a send that reverts is tried again and does not end the start.
+
+- **D58. A call that only writes a log is finished when its log says so.** A restart runs a
+  publication again from its first call. The chain refuses a repeated state change with a revert
+  that the node reads as done, but a key chunk is only a log, so nothing refuses it. Before each
+  chunk the node looks for its own copy in the logs since the block the committee was finalized in:
+  a confirmed copy is done, an unconfirmed one waits, and a chunk it cannot find goes out. When the
+  logs cannot be read the chunk goes out too, because a repeated chunk costs only gas.
+
+- **D59. A node shows that it read the whole registry.** Operators come from logs, from the
+  configured `deploy_block` on, and nothing else tells a node that it missed some. Once the reader
+  first catches up, at every start, the node compares how many operators it read with
+  `numCiphernodes` at the same block and stops if they differ, unless its journal is already past
+  that block, as behind a chain node that lags. A later start block would otherwise leave it ranking
+  committees from part of the operators, and submitting no ticket when its own is among the missing.
+  Only a reset repairs a history with a hole, so the error says so.
+
 ## Problems in the earlier node, with the fix above them
 
 - **Separate inputs, effects, signals, and notifications; wire types apart from internal types.**
