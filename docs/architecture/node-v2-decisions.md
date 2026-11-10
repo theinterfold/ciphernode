@@ -59,18 +59,18 @@ Each rule is checkable in review.
   shares. Before that, nothing can say whether a sender may speak, and a libp2p peer ID is not bound
   to an operator, so an attacker can sign as many operator addresses as it likes. This replaces the
   early-key record in `Init`
-  ([dkg](https://github.com/theinterfold/interfold/blob/529f2cbfcab67bb965dc6dd331ff9669d89dabbd/docs/architecture/dkg.md),
+  ([dkg](https://github.com/theinterfold/interfold/blob/76f34ce0a2a80c26915dce9886e940d0618d808c/docs/architecture/dkg.md),
   key collection row).
 - **D11. Every input first applies the deadlines that have passed.** A tick only wakes the machine,
   so a late wake-up changes nothing: a key check that returns after the key cutoff does not count,
   whether or not the cutoff's tick came first
-  ([dkg](https://github.com/theinterfold/interfold/blob/529f2cbfcab67bb965dc6dd331ff9669d89dabbd/docs/architecture/dkg.md),
+  ([dkg](https://github.com/theinterfold/interfold/blob/76f34ce0a2a80c26915dce9886e940d0618d808c/docs/architecture/dkg.md),
   "Timing and collection").
 
 - **D12. Ready reports only grow.** A member's later Ready must contain its earlier one; each
   receiver drops expelled dealers itself when it chooses a roster. Today a reporter drops expelled
   dealers, so a receiver that has not seen the expulsion yet must hold the update
-  ([dkg](https://github.com/theinterfold/interfold/blob/529f2cbfcab67bb965dc6dd331ff9669d89dabbd/docs/architecture/dkg.md),
+  ([dkg](https://github.com/theinterfold/interfold/blob/76f34ce0a2a80c26915dce9886e940d0618d808c/docs/architecture/dkg.md),
   "One H-roster").
 - **D13. One verification job per dealer.** A verdict covers one dealer's exact message, so a
   verdict can never apply to a batch it was not made for, and growth needs no new batch.
@@ -79,7 +79,7 @@ Each rule is checkable in review.
 
 - **D15. Only roster members make a decryption key (C4) and send a keyshare.** Decryption admits
   only roster members' C6 shares
-  ([threshold decryption](https://github.com/theinterfold/interfold/blob/529f2cbfcab67bb965dc6dd331ff9669d89dabbd/docs/architecture/threshold-decryption.md)),
+  ([threshold decryption](https://github.com/theinterfold/interfold/blob/76f34ce0a2a80c26915dce9886e940d0618d808c/docs/architecture/threshold-decryption.md)),
   and the key aggregates only roster keyshares, so a C4 or keyshare from outside the roster changes
   nothing. Every member still checks the roster members' C4 proofs, so accusations against them can
   reach quorum.
@@ -96,14 +96,14 @@ Each rule is checkable in review.
 - **D18. Decryption takes its authority from the chain.** The key event gives the committee in the
   registry's order, the roster (the selected party IDs in the proof's public inputs), and the key
   commitment; the decryption domain is computed from them and the ciphertext's hash
-  ([threshold decryption](https://github.com/theinterfold/interfold/blob/529f2cbfcab67bb965dc6dd331ff9669d89dabbd/docs/architecture/threshold-decryption.md),
+  ([threshold decryption](https://github.com/theinterfold/interfold/blob/76f34ce0a2a80c26915dce9886e940d0618d808c/docs/architecture/threshold-decryption.md),
   "Authority before work"). The DKG only supplies this node's sealed decryption key, and only when
   it summed that key over the chain's roster.
 
 - **D19. One re-send rule for every message a node sends.** While the work a message feeds still
-  runs at the node, its latest message of each kind goes again after one minute, then at doubling
-  intervals up to ten minutes, for at most eight hours
-  ([threshold decryption](https://github.com/theinterfold/interfold/blob/529f2cbfcab67bb965dc6dd331ff9669d89dabbd/docs/architecture/threshold-decryption.md),
+  runs at the node, its latest message of each kind goes again after 30 seconds, then at doubling
+  intervals up to five minutes, for at most eight hours
+  ([threshold decryption](https://github.com/theinterfold/interfold/blob/76f34ce0a2a80c26915dce9886e940d0618d808c/docs/architecture/threshold-decryption.md),
   "Restart and redelivery limits"). Receivers keep the first copy. This replaces per-phase timers,
   document re-announcement as the only DKG recovery, and the promoted aggregator's roster
   re-proposal.
@@ -111,11 +111,11 @@ Each rule is checkable in review.
 - **D20. Selection reads the node's own registry history.** Activity, ticket balances, bond owners,
   and the identity policy are chain facts with their block times; selection reads them at T−1 for a
   request at T
-  ([committee selection](https://github.com/theinterfold/interfold/blob/529f2cbfcab67bb965dc6dd331ff9669d89dabbd/docs/architecture/committee-selection.md)).
+  ([committee selection](https://github.com/theinterfold/interfold/blob/76f34ce0a2a80c26915dce9886e940d0618d808c/docs/architecture/committee-selection.md)).
   The node's load limit counts the live E3s it holds a ticket for, so no separate counter can drift.
-  Credentials are the exception: under a required identity policy an owner-capped request first asks
-  the bonding registry which candidates are eligible at T−1 (`eligibilityAt`), since that rule, with
-  its pause cutoffs and credential windows, lives in the contract. The node ranks only those, so the
+  Eligibility is the exception: every owner-capped request first asks the bonding registry which
+  candidates are eligible at T−1 (`eligibilityAt`), since that rule, with its admission cooldown,
+  pause cutoffs and credential windows, lives in the contract. The node ranks only those, so the
   owner shortlist holds. The read gets 20 seconds and must end 20 seconds before the ticket
   deadline; without an answer by then the node ranks every eligible operator, and the contract
   rejects the others.
@@ -171,15 +171,16 @@ Each rule is checkable in review.
   offers no view of the policy, and a node that starts after the policy's event would not know it,
   so the node refreshes unconditionally: ten minutes after a start, then a minute and an hour after
   each window starts, since a refresh counts for the window of its block.
-- **D26. A data directory carries its layout.** The node writes the layout beside its files: the
-  protocol's `ENCODING_VERSION` for the journal and snapshots, and the store's version for the blob
-  folders and the wallet file. It refuses a directory in another layout, so an update never misreads
-  an old journal or deletes old blobs as foreign. A test fingerprints a sample journal and snapshot,
-  so an encoding change fails until its version changes. v2 has no migrations before its first
-  release: a layout change means starting from an empty directory. `node reset-data` cannot read a
-  journal in another layout, so it then refuses unless `--allow-active-e3s` confirms that the node's
-  E3s have ended; a release that changes the layout ships a reader for the old one or asks operators
-  for that confirmation.
+- **D26. A data directory says what it is.** A manifest in the folder names the layout and whose
+  data it is: the protocol's `ENCODING_VERSION` for the journal and snapshots, the store's version
+  for the blob folders and the wallet file, and the chain, the deployment and the operator. The node
+  refuses a directory of another layout or owner, so an update never misreads an old journal or
+  deletes old blobs as foreign. A test fingerprints a sample journal and snapshot, so an encoding
+  change fails until its version changes. v2 has no migrations before its first release: a layout
+  change means starting from an empty directory. `node reset-data` cannot read a journal in another
+  layout, so it then refuses unless `--allow-active-e3s` confirms that the node's E3s have ended; a
+  release that changes the layout ships a reader for the old one or asks operators for that
+  confirmation.
 - **D27. Jobs prove with the circuits directly, and a check binds what it received to the proof.** A
   job builds each circuit's input from the values it already holds and runs `bb`; no proof requests
   travel as events. A dealer proves C3 for every other member's slot, a member without a valid key
@@ -256,12 +257,10 @@ Each rule is checkable in review.
   re-sends.** Kept: 8 inbound connections per address group and 16 waiting for Identify, the oldest
   of the busiest group closed for a newer one; 8 addresses and 2 KiB per peer, from its latest
   Identify; a peer connected without the topic for 30 seconds is disconnected and its redials back
-  off up to half an hour, except configured peers, which can be bootstrap nodes; a signed copy
-  counts from 10 minutes before the receiver's clock to 2 minutes after it. Left out: a fair queue
-  per sender between the network and the node, where a full channel of 1,024 messages drops the
-  newest and its sender's re-send (D19) brings it again; and per-peer limits on blob fetches, which
-  start with the publisher, then the forwarding peer, within the global limits of 4,096 fetches and
-  1 GiB. Both wait for measurements under real load.
+  off up to half an hour, except bootstrap nodes, which offer no blobs and take no messages; a
+  signed copy counts from 10 minutes before the receiver's clock to 2 minutes after it. Added since:
+  a per-sender limit between the network and the node (D44), and per-peer limits on blob fetches
+  (D45).
 
 - **D34. Writer retries do not jitter.** Every call retries with waits that double from 30 seconds
   to ten minutes. The earlier node capped settlement retries at 30 minutes with up to 10% jitter.
@@ -283,6 +282,109 @@ Each rule is checkable in review.
   `E3StageChanged` and `CommitteeMemberExpelled`. `CommitteeFormationFailed`,
   `CommitteeActivationChanged`, `CommitteeViabilityUpdated`, and an expulsion's reason and count
   stay on the chain, where a forensic tool reads them.
+
+- **D38. A node starts only from a verified configuration.** `preflight::verify` returns the only
+  value a node can be built from. It reads, with one retry until the startup deadline, the chain
+  behind the RPC URL, the addresses Interfold uses, the randomness provider and the release
+  requirement, and it checks the prover and the host. The same deadline holds through the first
+  catch-up: a reader that reads nothing for that long ends the process for its supervisor. After the
+  first catch-up the node waits out an outage.
+
+- **D39. The chain says when a call is finished.** Each contract function reads its own reverts as
+  retry, applied or obsolete, from the decoded payload. A revert it cannot place is retried while
+  the node owes the call, because a lagging RPC or a paused contract passes. An obsolete call ends
+  its submission.
+
+- **D40. One builder for chain connections, and a provider's limit is learned once.** A WebSocket
+  reconnects for the life of the node, and each caller's own time limit decides how long it waits. A
+  refused log range narrows for good; a real failure leaves the range alone.
+
+- **D41. An effect says how long it is owed.** Each effect has a scope, and the runtime stops the
+  work the machine no longer owes, down to killing a running `bb`. A repeated job has the same
+  inputs: its randomness comes from a kept seed, and its finished proofs are kept. Essential tasks
+  are supervised: one that ends takes the node down, so its supervisor can restart it.
+
+- **D42. A blob store has three spaces.** Public blobs are what messages export, sealed ones have no
+  network path, and kept ones are the job runner's. Serving asks only whether a public blob is in an
+  E3 still held, so a restart serves what it served before.
+
+- **D43. Folding follows arrivals.** The aggregator folds one member's proof at a time, in the
+  roster's order, as the folds arrive, so the last step is the only one left when the last fold
+  comes.
+
+- **D44. Admission is one read-only rule, before the journal.** `Node::classify` drops, holds,
+  fetches or delivers a message, and a drop costs no durable record. An inbox bounded in bytes and
+  per sender sits between the network and the node, and the node reads it when it is ready. The hold
+  has shares per sender and per E3, and refuses rather than evicts; a held message expires. One
+  fetch runs per message, and a failed one is a journaled input that reopens exactly that attempt.
+
+- **D45. Fetching is fair and bounded.** At most 8 reads run, 2 per peer, and the sender with the
+  fewest running goes next. Bytes count only while a read runs. Disk reads and writes leave the
+  swarm's task.
+
+- **D46. One owner decides who to dial.** A transport guard below DNS refuses dials that reach this
+  node. `PeerBook` sees every outbound dial: it redials configured peers with jitter and a cooldown,
+  remembers rejections, moves an address to the identity that answered there unless the operator
+  named one, and holds Identify and subscription deadlines.
+
+- **D47. A vote is a vote, and a check verifies before it compares.** An accusation for an open
+  window is one more vote in it, so members that accuse in the same second reach their quorum. Every
+  check verifies signed proofs before it compares bound bytes, so an invalid proof always reaches
+  accusation.
+
+- **D48. A convicted member is left out of the roster a node chooses.** A roster a node receives is
+  judged only by chain facts, so nodes that count votes at different times never refuse each other's
+  rosters and stop the same DKG.
+
+- **D49. The node explains itself.** Transitions it admitted produce typed notes: why a DKG failed
+  and who it waited for, Ready progress, rosters, failing proofs. They go to the log and to a
+  bounded feed on disk, which `interfold node events` and the status page read. Dropped messages
+  make none, so a flood writes nothing durable.
+
+- **D50. An accusation window must have a reason to stay open.** A member opens one window per
+  accusation, in the whole life of an E3: a member that follows the protocol accuses once, and
+  windows that follow each other would keep a completed E3 and its key share without end. A ballot
+  names its evidence hash, so votes for two hashes count apart. Every proof brought for a ballot is
+  a candidate until this node checks it, so a copy of a ballot with another proof cannot keep the
+  real evidence out. A window with no candidate and no evidence left ends, and votes that wait for
+  an accusation keep nothing. A completed E3 waits for checks still running, one vote window at
+  most.
+
+- **D51. Who carried a message does not matter; who signed it does.** A bootstrap peer offers no
+  blobs, so it is never asked for them. Its gossip is still taken: refusing the first copy of a
+  message would make gossipsub's duplicate filter drop the honest copies behind it.
+
+- **D52. The deployment's name is the Interfold address alone.** The chain ID is optional in the
+  configuration, and two nodes of one deployment must never disagree on the name. Two deployments at
+  one address on different chains would share a namespace, which their different chain facts and
+  operators already keep apart.
+
+- **D53. The operator's RPC is inside the node's trust boundary.** The node acts on what one RPC
+  says: its logs, its receipts, and the reverts that end a transaction's retries. A malicious RPC
+  can already make the node miss or take part in anything. Checking each answer against a second,
+  independent RPC is the design for a node that should not trust its RPC, and is not built.
+
+- **D54. Recovered work waits for the chain.** What was under way at the last stop is looked at only
+  after the reader first catches up: an E3 may have moved on while the node was away. A job holds
+  its place until its process has ended, so a stop can wait for `bb` to go.
+
+- **D55. A blob goes only to its E3's committee, in the order asked.** Peer IDs are free and the
+  chain names none, so a node signs its peer ID once with its operator key, and every blob request
+  shows that proof. A node answers with bytes only when the proof names an operator on the committee
+  of the blob's E3 and names the peer on the connection. A peer that claims a member it cannot prove
+  to be is dropped. The proof travels in the request because a fetch can be the first thing on a new
+  connection. Eight blobs are served at once, one per member, and a member may have two requests
+  out, the most an honest node sends one peer. A request past the free places waits its turn: a
+  committee asks for its blobs all at once, and a refusal would cost it a re-send's wait. Only
+  members stand in the line, so it stays as short as the committees are small. One place each means
+  that the faulty members a committee tolerates (five of nineteen at most) cannot take all eight,
+  however slowly they read. A member the chain expels stops being served, also while it waits.
+
+- **D56. Purge deletes data, never keys.** `nodes purge` and `purge-all` are `reset-data` for every
+  node in the configuration, all or none. A key may be the only one that can claim a bond, and a
+  command that deletes one would have to know every folder it ever ran in, which no file can
+  promise. Deleting a key is a deliberate act by hand. A folder of a profile that the configuration
+  no longer names stays.
 
 ## Problems in the earlier node, with the fix above them
 
