@@ -39,6 +39,189 @@ dependencies = [
 ]
 
 [[package]]
+name = "actix-codec"
+version = "0.5.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5f7b0a21988c1bf877cf4759ef5ddaac04c1c9fe808c9142ecb78ba97d97a28a"
+dependencies = [
+ "bitflags 2.10.0",
+ "bytes",
+ "futures-core",
+ "futures-sink",
+ "memchr",
+ "pin-project-lite",
+ "tokio",
+ "tokio-util",
+ "tracing",
+]
+
+[[package]]
+name = "actix-http"
+version = "3.11.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7926860314cbe2fb5d1f13731e387ab43bd32bca224e82e6e2db85de0a3dba49"
+dependencies = [
+ "actix-codec",
+ "actix-rt",
+ "actix-service",
+ "actix-utils",
+ "base64 0.22.1",
+ "bitflags 2.10.0",
+ "brotli",
+ "bytes",
+ "bytestring",
+ "derive_more 2.1.1",
+ "encoding_rs",
+ "flate2",
+ "foldhash 0.1.5",
+ "futures-core",
+ "h2 0.3.27",
+ "http 0.2.12",
+ "httparse",
+ "httpdate",
+ "itoa",
+ "language-tags",
+ "local-channel",
+ "mime",
+ "percent-encoding",
+ "pin-project-lite",
+ "rand 0.9.5",
+ "sha1",
+ "smallvec",
+ "tokio",
+ "tokio-util",
+ "tracing",
+ "zstd",
+]
+
+[[package]]
+name = "actix-macros"
+version = "0.2.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e01ed3140b2f8d422c68afa1ed2e85d996ea619c988ac834d255db32138655cb"
+dependencies = [
+ "quote",
+ "syn 2.0.117",
+]
+
+[[package]]
+name = "actix-router"
+version = "0.5.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "13d324164c51f63867b57e73ba5936ea151b8a41a1d23d1031eeb9f70d0236f8"
+dependencies = [
+ "bytestring",
+ "cfg-if",
+ "http 0.2.12",
+ "regex",
+ "regex-lite",
+ "serde",
+ "tracing",
+]
+
+[[package]]
+name = "actix-rt"
+version = "2.11.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "92589714878ca59a7626ea19734f0e07a6a875197eec751bb5d3f99e64998c63"
+dependencies = [
+ "futures-core",
+ "tokio",
+]
+
+[[package]]
+name = "actix-server"
+version = "2.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a65064ea4a457eaf07f2fba30b4c695bf43b721790e9530d26cb6f9019ff7502"
+dependencies = [
+ "actix-rt",
+ "actix-service",
+ "actix-utils",
+ "futures-core",
+ "futures-util",
+ "mio",
+ "socket2 0.5.10",
+ "tokio",
+ "tracing",
+]
+
+[[package]]
+name = "actix-service"
+version = "2.0.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9e46f36bf0e5af44bdc4bdb36fbbd421aa98c79a9bce724e1edeb3894e10dc7f"
+dependencies = [
+ "futures-core",
+ "pin-project-lite",
+]
+
+[[package]]
+name = "actix-utils"
+version = "3.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "88a1dcdff1466e3c2488e1cb5c36a71822750ad43839937f85d2f4d9f8b705d8"
+dependencies = [
+ "local-waker",
+ "pin-project-lite",
+]
+
+[[package]]
+name = "actix-web"
+version = "4.11.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a597b77b5c6d6a1e1097fddde329a83665e25c5437c696a3a9a4aa514a614dea"
+dependencies = [
+ "actix-codec",
+ "actix-http",
+ "actix-macros",
+ "actix-router",
+ "actix-rt",
+ "actix-server",
+ "actix-service",
+ "actix-utils",
+ "actix-web-codegen",
+ "bytes",
+ "bytestring",
+ "cfg-if",
+ "cookie",
+ "derive_more 2.1.1",
+ "encoding_rs",
+ "foldhash 0.1.5",
+ "futures-core",
+ "futures-util",
+ "impl-more",
+ "itoa",
+ "language-tags",
+ "log",
+ "mime",
+ "once_cell",
+ "pin-project-lite",
+ "regex",
+ "regex-lite",
+ "serde",
+ "serde_json",
+ "serde_urlencoded",
+ "smallvec",
+ "socket2 0.5.10",
+ "time",
+ "tracing",
+ "url",
+]
+
+[[package]]
+name = "actix-web-codegen"
+version = "4.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f591380e2e68490b5dfaf1dd1aa0ebe78d84ba7067078512b4ea6e4492d622b8"
+dependencies = [
+ "actix-router",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.117",
+]
+
+[[package]]
 name = "acvm"
 version = "1.0.0-rc.3"
 source = "git+https://github.com/noir-lang/noir?tag=v1.0.0-rc.3#5a7ee9bf5ed8973076df7bb0d2b723024db09ae7"
@@ -152,6 +335,21 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ddd31a130427c27518df266943a5308ed92d4b226cc639f5a8f1002816174301"
 dependencies = [
  "memchr",
+]
+
+[[package]]
+name = "alloc-no-stdlib"
+version = "2.0.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cc7bb162ec39d46ab1ca8c77bf72e890535becd1751bb45f64c597edb4c8c6b3"
+
+[[package]]
+name = "alloc-stdlib"
+version = "0.2.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "94fb8275041c72129eb51b7d0322c29b8387a0386127718b096429201a5d6ece"
+dependencies = [
+ "alloc-no-stdlib",
 ]
 
 [[package]]
@@ -396,7 +594,7 @@ checksum = "d7c69f6c9c68a1287c9d5ff903d0010726934de0dac10989be37b75a29190d55"
 dependencies = [
  "alloy-primitives",
  "alloy-sol-types",
- "http",
+ "http 1.4.0",
  "serde",
  "serde_json",
  "thiserror 2.0.20",
@@ -906,7 +1104,7 @@ dependencies = [
  "alloy-pubsub",
  "alloy-transport",
  "futures",
- "http",
+ "http 1.4.0",
  "rustls",
  "serde_json",
  "tokio",
@@ -1670,7 +1868,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "16e2cdb6d5ed835199484bb92bb8b3edd526effe995c61732580439c1a67e2e9"
 dependencies = [
  "base64 0.22.1",
- "http",
+ "http 1.4.0",
  "log",
  "url",
 ]
@@ -2056,6 +2254,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "brotli"
+version = "8.0.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4bd8b9603c7aa97359dbd97ecf258968c95f3adddd6db2f7e7a5bef101c84560"
+dependencies = [
+ "alloc-no-stdlib",
+ "alloc-stdlib",
+ "brotli-decompressor",
+]
+
+[[package]]
+name = "brotli-decompressor"
+version = "5.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "874bb8112abecc98cbd6d81ea4fa7e94fb9449648c93cc89aa40c81c24d7de03"
+dependencies = [
+ "alloc-no-stdlib",
+ "alloc-stdlib",
+]
+
+[[package]]
 name = "bs58"
 version = "0.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2108,6 +2327,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "bytestring"
+version = "1.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "113b4343b5f6617e7ad401ced8de3cc8b012e73a594347c307b90db3e9271289"
+dependencies = [
+ "bytes",
+]
+
+[[package]]
 name = "c-kzg"
 version = "2.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2147,6 +2375,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "47b26a0954ae34af09b50f0de26458fa95369a0d478d8236d3f93082b219bd29"
 dependencies = [
  "find-msvc-tools",
+ "jobserver",
+ "libc",
  "shlex",
 ]
 
@@ -2406,6 +2636,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "633458d4ef8c78b72454de2d54fd6ab2e60f9e02be22f3c6104cdc8a4e0fceb9"
 dependencies = [
  "unicode-segmentation",
+]
+
+[[package]]
+name = "cookie"
+version = "0.16.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e859cd57d0710d9e06c381b550c06e76992472a8c6d527aecd2fc673dcc231fb"
+dependencies = [
+ "percent-encoding",
+ "time",
+ "version_check",
 ]
 
 [[package]]
@@ -3048,7 +3289,7 @@ checksum = "d0881ea181b1df73ff77ffaaf9c7544ecc11e82fba9b5f27b262a3c73a332555"
 [[package]]
 name = "e3-bfv-client"
 version = "0.20.0-dev.3"
-source = "git+https://github.com/theinterfold/interfold?rev=529f2cbfcab67bb965dc6dd331ff9669d89dabbd#529f2cbfcab67bb965dc6dd331ff9669d89dabbd"
+source = "git+https://github.com/theinterfold/interfold?rev=76f34ce0a2a80c26915dce9886e940d0618d808c#76f34ce0a2a80c26915dce9886e940d0618d808c"
 dependencies = [
  "anyhow",
  "e3-fhe-params",
@@ -3080,6 +3321,7 @@ dependencies = [
  "e3-blobs",
  "e3-committee",
  "e3-data-availability",
+ "e3-evm",
  "e3-evm-contracts",
  "e3-evm-transactions",
  "e3-protocol",
@@ -3089,13 +3331,14 @@ dependencies = [
  "tempfile",
  "thiserror 1.0.69",
  "tokio",
+ "tokio-tungstenite",
  "tracing",
 ]
 
 [[package]]
 name = "e3-ciphernode-config"
 version = "0.20.0-dev.3"
-source = "git+https://github.com/theinterfold/interfold?rev=529f2cbfcab67bb965dc6dd331ff9669d89dabbd#529f2cbfcab67bb965dc6dd331ff9669d89dabbd"
+source = "git+https://github.com/theinterfold/interfold?rev=76f34ce0a2a80c26915dce9886e940d0618d808c#76f34ce0a2a80c26915dce9886e940d0618d808c"
 dependencies = [
  "alloy-primitives",
  "anyhow",
@@ -3110,7 +3353,7 @@ dependencies = [
 [[package]]
 name = "e3-committee"
 version = "0.20.0-dev.3"
-source = "git+https://github.com/theinterfold/interfold?rev=529f2cbfcab67bb965dc6dd331ff9669d89dabbd#529f2cbfcab67bb965dc6dd331ff9669d89dabbd"
+source = "git+https://github.com/theinterfold/interfold?rev=76f34ce0a2a80c26915dce9886e940d0618d808c#76f34ce0a2a80c26915dce9886e940d0618d808c"
 dependencies = [
  "anyhow",
  "serde",
@@ -3119,7 +3362,7 @@ dependencies = [
 [[package]]
 name = "e3-committee-hash"
 version = "0.20.0-dev.3"
-source = "git+https://github.com/theinterfold/interfold?rev=529f2cbfcab67bb965dc6dd331ff9669d89dabbd#529f2cbfcab67bb965dc6dd331ff9669d89dabbd"
+source = "git+https://github.com/theinterfold/interfold?rev=76f34ce0a2a80c26915dce9886e940d0618d808c#76f34ce0a2a80c26915dce9886e940d0618d808c"
 dependencies = [
  "alloy",
  "hex",
@@ -3129,7 +3372,7 @@ dependencies = [
 [[package]]
 name = "e3-crypto"
 version = "0.20.0-dev.3"
-source = "git+https://github.com/theinterfold/interfold?rev=529f2cbfcab67bb965dc6dd331ff9669d89dabbd#529f2cbfcab67bb965dc6dd331ff9669d89dabbd"
+source = "git+https://github.com/theinterfold/interfold?rev=76f34ce0a2a80c26915dce9886e940d0618d808c#76f34ce0a2a80c26915dce9886e940d0618d808c"
 dependencies = [
  "aes-gcm",
  "anyhow",
@@ -3148,7 +3391,7 @@ dependencies = [
 [[package]]
 name = "e3-data-availability"
 version = "0.20.0-dev.3"
-source = "git+https://github.com/theinterfold/interfold?rev=529f2cbfcab67bb965dc6dd331ff9669d89dabbd#529f2cbfcab67bb965dc6dd331ff9669d89dabbd"
+source = "git+https://github.com/theinterfold/interfold?rev=76f34ce0a2a80c26915dce9886e940d0618d808c#76f34ce0a2a80c26915dce9886e940d0618d808c"
 dependencies = [
  "alloy-primitives",
  "alloy-sol-types",
@@ -3172,9 +3415,47 @@ dependencies = [
 ]
 
 [[package]]
+name = "e3-entrypoint"
+version = "0.20.0-dev.3"
+source = "git+https://github.com/theinterfold/interfold?rev=76f34ce0a2a80c26915dce9886e940d0618d808c#76f34ce0a2a80c26915dce9886e940d0618d808c"
+dependencies = [
+ "actix-web",
+ "anyhow",
+ "e3-ciphernode-config",
+ "e3-crypto",
+ "libc",
+ "libp2p",
+ "rand 0.9.5",
+ "reqwest",
+ "serde",
+ "tokio",
+ "tracing",
+ "zeroize",
+]
+
+[[package]]
+name = "e3-evm"
+version = "0.20.0-dev.3"
+source = "git+https://github.com/theinterfold/interfold?rev=76f34ce0a2a80c26915dce9886e940d0618d808c#76f34ce0a2a80c26915dce9886e940d0618d808c"
+dependencies = [
+ "alloy",
+ "anyhow",
+ "async-trait",
+ "base64 0.22.1",
+ "e3-evm-config",
+ "e3-evm-contracts",
+ "hex",
+ "serde",
+ "serde_json",
+ "tokio",
+ "tracing",
+ "url",
+]
+
+[[package]]
 name = "e3-evm-config"
 version = "0.20.0-dev.3"
-source = "git+https://github.com/theinterfold/interfold?rev=529f2cbfcab67bb965dc6dd331ff9669d89dabbd#529f2cbfcab67bb965dc6dd331ff9669d89dabbd"
+source = "git+https://github.com/theinterfold/interfold?rev=76f34ce0a2a80c26915dce9886e940d0618d808c#76f34ce0a2a80c26915dce9886e940d0618d808c"
 dependencies = [
  "alloy-primitives",
  "anyhow",
@@ -3185,7 +3466,7 @@ dependencies = [
 [[package]]
 name = "e3-evm-contracts"
 version = "0.20.0-dev.3"
-source = "git+https://github.com/theinterfold/interfold?rev=529f2cbfcab67bb965dc6dd331ff9669d89dabbd#529f2cbfcab67bb965dc6dd331ff9669d89dabbd"
+source = "git+https://github.com/theinterfold/interfold?rev=76f34ce0a2a80c26915dce9886e940d0618d808c#76f34ce0a2a80c26915dce9886e940d0618d808c"
 dependencies = [
  "alloy-contract",
  "alloy-json-abi",
@@ -3196,7 +3477,7 @@ dependencies = [
 [[package]]
 name = "e3-evm-transactions"
 version = "0.20.0-dev.3"
-source = "git+https://github.com/theinterfold/interfold?rev=529f2cbfcab67bb965dc6dd331ff9669d89dabbd#529f2cbfcab67bb965dc6dd331ff9669d89dabbd"
+source = "git+https://github.com/theinterfold/interfold?rev=76f34ce0a2a80c26915dce9886e940d0618d808c#76f34ce0a2a80c26915dce9886e940d0618d808c"
 dependencies = [
  "alloy",
 ]
@@ -3204,7 +3485,7 @@ dependencies = [
 [[package]]
 name = "e3-fhe-params"
 version = "0.20.0-dev.3"
-source = "git+https://github.com/theinterfold/interfold?rev=529f2cbfcab67bb965dc6dd331ff9669d89dabbd#529f2cbfcab67bb965dc6dd331ff9669d89dabbd"
+source = "git+https://github.com/theinterfold/interfold?rev=76f34ce0a2a80c26915dce9886e940d0618d808c#76f34ce0a2a80c26915dce9886e940d0618d808c"
 dependencies = [
  "alloy-dyn-abi",
  "alloy-primitives",
@@ -3246,11 +3527,13 @@ dependencies = [
  "ndarray",
  "num-bigint 0.5.1",
  "rand 0.9.5",
+ "rand_chacha 0.9.0",
  "rand_core 0.9.5",
  "rayon",
  "serde",
  "thiserror 1.0.69",
  "tokio",
+ "zeroize",
 ]
 
 [[package]]
@@ -3270,19 +3553,25 @@ dependencies = [
  "alloy-primitives",
  "alloy-signer",
  "alloy-signer-local",
+ "alloy-sol-types",
  "anyhow",
+ "async-trait",
+ "bincode",
  "e3-blobs",
  "e3-chain",
  "e3-ciphernode-config",
  "e3-crypto",
  "e3-data-availability",
  "e3-engine",
+ "e3-entrypoint",
  "e3-evm-contracts",
  "e3-jobs",
  "e3-journal",
  "e3-p2p",
  "e3-protocol",
+ "e3-utils",
  "e3-zk-prover",
+ "futures",
  "serde",
  "serde_json",
  "tempfile",
@@ -3300,8 +3589,10 @@ dependencies = [
  "alloy-signer",
  "e3-blobs",
  "e3-protocol",
+ "e3-utils",
  "futures",
  "libp2p",
+ "serde",
  "serde_bytes",
  "sha2 0.10.9",
  "tempfile",
@@ -3313,7 +3604,7 @@ dependencies = [
 [[package]]
 name = "e3-parity-matrix"
 version = "0.20.0-dev.3"
-source = "git+https://github.com/theinterfold/interfold?rev=529f2cbfcab67bb965dc6dd331ff9669d89dabbd#529f2cbfcab67bb965dc6dd331ff9669d89dabbd"
+source = "git+https://github.com/theinterfold/interfold?rev=76f34ce0a2a80c26915dce9886e940d0618d808c#76f34ce0a2a80c26915dce9886e940d0618d808c"
 dependencies = [
  "num-bigint 0.5.1",
  "num-traits",
@@ -3324,7 +3615,7 @@ dependencies = [
 [[package]]
 name = "e3-polynomial"
 version = "0.20.0-dev.3"
-source = "git+https://github.com/theinterfold/interfold?rev=529f2cbfcab67bb965dc6dd331ff9669d89dabbd#529f2cbfcab67bb965dc6dd331ff9669d89dabbd"
+source = "git+https://github.com/theinterfold/interfold?rev=76f34ce0a2a80c26915dce9886e940d0618d808c#76f34ce0a2a80c26915dce9886e940d0618d808c"
 dependencies = [
  "num-bigint 0.5.1",
  "num-integer",
@@ -3336,7 +3627,7 @@ dependencies = [
 [[package]]
 name = "e3-polynomial-fhe"
 version = "0.20.0-dev.3"
-source = "git+https://github.com/theinterfold/interfold?rev=529f2cbfcab67bb965dc6dd331ff9669d89dabbd#529f2cbfcab67bb965dc6dd331ff9669d89dabbd"
+source = "git+https://github.com/theinterfold/interfold?rev=76f34ce0a2a80c26915dce9886e940d0618d808c#76f34ce0a2a80c26915dce9886e940d0618d808c"
 dependencies = [
  "e3-polynomial",
  "fhe-math",
@@ -3361,7 +3652,7 @@ dependencies = [
 [[package]]
 name = "e3-safe"
 version = "0.20.0-dev.3"
-source = "git+https://github.com/theinterfold/interfold?rev=529f2cbfcab67bb965dc6dd331ff9669d89dabbd#529f2cbfcab67bb965dc6dd331ff9669d89dabbd"
+source = "git+https://github.com/theinterfold/interfold?rev=76f34ce0a2a80c26915dce9886e940d0618d808c#76f34ce0a2a80c26915dce9886e940d0618d808c"
 dependencies = [
  "ark-bn254 0.5.0",
  "ark-ff 0.5.0",
@@ -3388,7 +3679,7 @@ dependencies = [
 [[package]]
 name = "e3-trbfv"
 version = "0.20.0-dev.3"
-source = "git+https://github.com/theinterfold/interfold?rev=529f2cbfcab67bb965dc6dd331ff9669d89dabbd#529f2cbfcab67bb965dc6dd331ff9669d89dabbd"
+source = "git+https://github.com/theinterfold/interfold?rev=76f34ce0a2a80c26915dce9886e940d0618d808c#76f34ce0a2a80c26915dce9886e940d0618d808c"
 dependencies = [
  "anyhow",
  "bincode",
@@ -3412,7 +3703,7 @@ dependencies = [
 [[package]]
 name = "e3-utils"
 version = "0.20.0-dev.3"
-source = "git+https://github.com/theinterfold/interfold?rev=529f2cbfcab67bb965dc6dd331ff9669d89dabbd#529f2cbfcab67bb965dc6dd331ff9669d89dabbd"
+source = "git+https://github.com/theinterfold/interfold?rev=76f34ce0a2a80c26915dce9886e940d0618d808c#76f34ce0a2a80c26915dce9886e940d0618d808c"
 dependencies = [
  "anyhow",
  "bincode",
@@ -3430,7 +3721,7 @@ dependencies = [
 [[package]]
 name = "e3-utils-derive"
 version = "0.20.0-dev.3"
-source = "git+https://github.com/theinterfold/interfold?rev=529f2cbfcab67bb965dc6dd331ff9669d89dabbd#529f2cbfcab67bb965dc6dd331ff9669d89dabbd"
+source = "git+https://github.com/theinterfold/interfold?rev=76f34ce0a2a80c26915dce9886e940d0618d808c#76f34ce0a2a80c26915dce9886e940d0618d808c"
 dependencies = [
  "hex",
  "proc-macro2",
@@ -3441,7 +3732,7 @@ dependencies = [
 [[package]]
 name = "e3-zk-config"
 version = "0.20.0-dev.3"
-source = "git+https://github.com/theinterfold/interfold?rev=529f2cbfcab67bb965dc6dd331ff9669d89dabbd#529f2cbfcab67bb965dc6dd331ff9669d89dabbd"
+source = "git+https://github.com/theinterfold/interfold?rev=76f34ce0a2a80c26915dce9886e940d0618d808c#76f34ce0a2a80c26915dce9886e940d0618d808c"
 dependencies = [
  "ark-bn254 0.5.0",
  "ark-ff 0.5.0",
@@ -3461,7 +3752,7 @@ dependencies = [
 [[package]]
 name = "e3-zk-prover"
 version = "0.20.0-dev.3"
-source = "git+https://github.com/theinterfold/interfold?rev=529f2cbfcab67bb965dc6dd331ff9669d89dabbd#529f2cbfcab67bb965dc6dd331ff9669d89dabbd"
+source = "git+https://github.com/theinterfold/interfold?rev=76f34ce0a2a80c26915dce9886e940d0618d808c#76f34ce0a2a80c26915dce9886e940d0618d808c"
 dependencies = [
  "acir",
  "alloy",
@@ -3507,7 +3798,7 @@ dependencies = [
 [[package]]
 name = "e3-zk-witness"
 version = "0.20.0-dev.3"
-source = "git+https://github.com/theinterfold/interfold?rev=529f2cbfcab67bb965dc6dd331ff9669d89dabbd#529f2cbfcab67bb965dc6dd331ff9669d89dabbd"
+source = "git+https://github.com/theinterfold/interfold?rev=76f34ce0a2a80c26915dce9886e940d0618d808c#76f34ce0a2a80c26915dce9886e940d0618d808c"
 dependencies = [
  "anyhow",
  "ark-bn254 0.5.0",
@@ -4273,6 +4564,25 @@ dependencies = [
 
 [[package]]
 name = "h2"
+version = "0.3.27"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0beca50380b1fc32983fc1cb4587bfa4bb9e78fc259aad4a0032d2080309222d"
+dependencies = [
+ "bytes",
+ "fnv",
+ "futures-core",
+ "futures-sink",
+ "futures-util",
+ "http 0.2.12",
+ "indexmap 2.14.0",
+ "slab",
+ "tokio",
+ "tokio-util",
+ "tracing",
+]
+
+[[package]]
+name = "h2"
 version = "0.4.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2f44da3a8150a6703ed5d34e164b875fd14c2cdab9af1252a9a1020bde2bdc54"
@@ -4282,7 +4592,7 @@ dependencies = [
  "fnv",
  "futures-core",
  "futures-sink",
- "http",
+ "http 1.4.0",
  "indexmap 2.14.0",
  "slab",
  "tokio",
@@ -4486,6 +4796,17 @@ dependencies = [
 
 [[package]]
 name = "http"
+version = "0.2.12"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "601cbb57e577e2f5ef5be8e7b83f0f63994f25aa94d673e54a92d5c516d101f1"
+dependencies = [
+ "bytes",
+ "fnv",
+ "itoa",
+]
+
+[[package]]
+name = "http"
 version = "1.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e3ba2a386d7f85a81f119ad7498ebe444d2e22c2af0b86b069416ace48b3311a"
@@ -4501,7 +4822,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1efedce1fb8e6913f23e0c92de8e62cd5b772a67e7b3946df930a62566c93184"
 dependencies = [
  "bytes",
- "http",
+ "http 1.4.0",
 ]
 
 [[package]]
@@ -4512,7 +4833,7 @@ checksum = "b021d93e26becf5dc7e1b75b1bed1fd93124b374ceb73f43d4d4eafec896a64a"
 dependencies = [
  "bytes",
  "futures-core",
- "http",
+ "http 1.4.0",
  "http-body",
  "pin-project-lite",
 ]
@@ -4522,6 +4843,12 @@ name = "httparse"
 version = "1.10.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6dbf3de79e51f3d586ab4cb9d5c3e2c14aa28ed23d180cf89b4df0454a69cc87"
+
+[[package]]
+name = "httpdate"
+version = "1.0.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "df3b46402a9d5adb4c86a0cf463f42e19994e3ee891101b1841f30a545cb49a9"
 
 [[package]]
 name = "hybrid-array"
@@ -4544,8 +4871,8 @@ dependencies = [
  "bytes",
  "futures-channel",
  "futures-core",
- "h2",
- "http",
+ "h2 0.4.13",
+ "http 1.4.0",
  "http-body",
  "httparse",
  "itoa",
@@ -4562,7 +4889,7 @@ version = "0.27.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e3c93eb611681b207e1fe55d5a71ecf91572ec8a6705cdb6857f7d8d5242cf58"
 dependencies = [
- "http",
+ "http 1.4.0",
  "hyper",
  "hyper-util",
  "rustls",
@@ -4600,7 +4927,7 @@ dependencies = [
  "futures-channel",
  "futures-core",
  "futures-util",
- "http",
+ "http 1.4.0",
  "http-body",
  "hyper",
  "ipnet",
@@ -4790,7 +5117,7 @@ dependencies = [
  "attohttpc",
  "bytes",
  "futures",
- "http",
+ "http 1.4.0",
  "http-body-util",
  "hyper",
  "hyper-util",
@@ -4840,6 +5167,12 @@ checksum = "2d40b9d5e17727407e55028eafc22b2dc68781786e6d7eb8a21103f5058e3a14"
 dependencies = [
  "parity-scale-codec",
 ]
+
+[[package]]
+name = "impl-more"
+version = "0.1.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e8a5a9a0ff0086c7a148acb942baaabeadf9504d10400b5a05645853729b9cd2"
 
 [[package]]
 name = "impl-serde"
@@ -5074,6 +5407,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "jobserver"
+version = "0.1.34"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9afb3de4395d6b3e67a780b6de64b51c978ecf11cb9a462c66be7d4ca9039d33"
+dependencies = [
+ "getrandom 0.3.4",
+ "libc",
+]
+
+[[package]]
 name = "js-sys"
 version = "0.3.85"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5112,7 +5455,7 @@ checksum = "b3e1420b1792cff778e2a1ebaa44115f156ee62a94dd106eaa51163f037d2023"
 dependencies = [
  "base64 0.22.1",
  "futures-util",
- "http",
+ "http 1.4.0",
  "jsonrpsee-core 0.24.11",
  "pin-project",
  "rustls",
@@ -5155,7 +5498,7 @@ checksum = "316c96719901f05d1137f19ba598b5fe9c9bc39f4335f67f6be8613921946480"
 dependencies = [
  "async-trait",
  "futures-util",
- "http",
+ "http 1.4.0",
  "jsonrpsee-types 0.26.0",
  "pin-project",
  "serde",
@@ -5172,7 +5515,7 @@ version = "0.24.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "41d86fc943f81dab0ecdd6c0240b6e0f55ad57a2ea9ad8ad7efe8456fb9cc7a4"
 dependencies = [
- "http",
+ "http 1.4.0",
  "serde",
  "serde_json",
  "thiserror 1.0.69",
@@ -5184,7 +5527,7 @@ version = "0.26.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bc88ff4688e43cc3fa9883a8a95c6fa27aa2e76c96e610b737b6554d650d7fd5"
 dependencies = [
- "http",
+ "http 1.4.0",
  "serde",
  "serde_json",
  "thiserror 2.0.20",
@@ -5196,7 +5539,7 @@ version = "0.24.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9df5bd5c38c0906a6e8b3a38c8c22cc8525fda25fd1a03a3fe010686aea66b70"
 dependencies = [
- "http",
+ "http 1.4.0",
  "jsonrpsee-client-transport",
  "jsonrpsee-core 0.24.11",
  "jsonrpsee-types 0.24.11",
@@ -5270,6 +5613,12 @@ dependencies = [
  "primitive-types 0.13.1",
  "tiny-keccak",
 ]
+
+[[package]]
+name = "language-tags"
+version = "0.3.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d4345964bb142484797b161f473a503a434de77149dd8c7427788c6e13379388"
 
 [[package]]
 name = "lazy_static"
@@ -5732,6 +6081,23 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6373607a59f0be73a39b6fe456b8192fcc3585f602af20751600e974dd455e77"
 
 [[package]]
+name = "local-channel"
+version = "0.1.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b6cbc85e69b8df4b8bb8b89ec634e7189099cea8927a276b7384ce5488e53ec8"
+dependencies = [
+ "futures-core",
+ "futures-sink",
+ "local-waker",
+]
+
+[[package]]
+name = "local-waker"
+version = "0.1.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4d873d7c67ce09b42110d801813efbc9364414e356be9935700d368351657487"
+
+[[package]]
 name = "lock_api"
 version = "0.4.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5858,6 +6224,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a69bcab0ad47271a0234d9422b131806bf3968021e5dc9328caf2d4cd58557fc"
 dependencies = [
  "libc",
+ "log",
  "wasi",
  "windows-sys 0.61.2",
 ]
@@ -7503,6 +7870,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "regex-lite"
+version = "0.1.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8d942b98df5e658f56f20d592c7f868833fe38115e65c33003d8cd224b0155da"
+
+[[package]]
 name = "regex-syntax"
 version = "0.8.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -7519,8 +7892,8 @@ dependencies = [
  "encoding_rs",
  "futures-core",
  "futures-util",
- "h2",
- "http",
+ "h2 0.4.13",
+ "http 1.4.0",
  "http-body",
  "http-body-util",
  "hyper",
@@ -9407,7 +9780,7 @@ dependencies = [
  "bitflags 2.10.0",
  "bytes",
  "futures-util",
- "http",
+ "http 1.4.0",
  "http-body",
  "iri-string",
  "pin-project-lite",
@@ -9539,7 +9912,7 @@ checksum = "4793cb5e56680ecbb1d843515b23b6de9a75eb04b66643e256a396d43be33c13"
 dependencies = [
  "bytes",
  "data-encoding",
- "http",
+ "http 1.4.0",
  "httparse",
  "log",
  "rand 0.9.5",
@@ -10632,4 +11005,32 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn 2.0.117",
+]
+
+[[package]]
+name = "zstd"
+version = "0.13.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cdb02c3132d251ab1606e9fc913a7da6c6ed08cc263df15edf082e1dc497d157"
+dependencies = [
+ "zstd-safe",
+]
+
+[[package]]
+name = "zstd-safe"
+version = "7.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1c8ea04668f5de8d8d51051714ba560c9536519cadcdb8829bba4fe2ad159b03"
+dependencies = [
+ "zstd-sys",
+]
+
+[[package]]
+name = "zstd-sys"
+version = "2.1.2+zstd.1.5.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "481ada9c543b2323cbb7bbdbb5249177fbf0188ed959ed2c15e4b22421c84ed3"
+dependencies = [
+ "cc",
+ "pkg-config",
 ]
