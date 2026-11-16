@@ -22,6 +22,10 @@ jobs:
       - name: Install protoc
         uses: ./.github/actions/install-protoc
 
+      # The wallet's tests send transactions to anvil.
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@908c540300062bd5a7e473851cdb4282204cee09 # v1
+
       - name: Install Rust
         uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8 # stable
         with:
