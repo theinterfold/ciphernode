@@ -805,7 +805,7 @@ impl<B: Blobs> Jobs<'_, B> {
             c4b_proof: &load(c4b, ProofType::C4bESmShareDecryption)?,
             party_id: trbfv::party(committee, member)? as u64,
         };
-        let (work, artifacts) = (self.work("fold"), self.artifacts(prover, params)?);
+        let (work, artifacts) = (self.work("fold"), self.artifacts(params)?);
         let fold = prover
             .proving(|zk| prove_node_dkg_fold(zk, &input, &work, &artifacts))?
             .proof;
@@ -911,12 +911,18 @@ impl<B: Blobs> Jobs<'_, B> {
             );
         };
         let fold = proofs::load(&self.blobs, fold, CircuitName::NodeFold)?;
+        // Slot 0 goes into the kernel on its own, so the accumulator of slot 1 is a kernel proof,
+        // which the step verifies with the kernel's key. Every later accumulator is a fold step's.
+        let previous = match slot {
+            1 => CircuitName::NodesFoldKernel,
+            _ => CircuitName::NodesFold,
+        };
         let accumulator = accumulator
-            .map(|proof| proofs::load(&self.blobs, proof, CircuitName::NodesFold))
+            .map(|proof| proofs::load(&self.blobs, proof, previous))
             .transpose()?;
         let (work, artifacts) = (
             self.work(&format!("roster-fold-{slot}")),
-            self.artifacts(prover, params)?,
+            self.artifacts(params)?,
         );
         let folded = prover.proving(|zk| {
             generate_nodes_fold_step(
@@ -968,7 +974,7 @@ impl<B: Blobs> Jobs<'_, B> {
                 proof: placeholder::key_aggregation(&self.blobs, committee, roster, commitment)?,
             });
         };
-        let artifacts = self.artifacts(prover, params)?;
+        let artifacts = self.artifacts(params)?;
         let c5_config =
             e3_zk_config::threshold::pk_aggregation::Configs::new(&bfv, params.committee_size)
                 .map_err(JobError::crypto)?;
@@ -998,9 +1004,9 @@ impl<B: Blobs> Jobs<'_, B> {
             party_ids: &party_ids,
             committee_addresses: committee,
         };
-        let (work, preset) = (self.work("dkg"), trbfv::threshold_preset(params)?);
+        let (work, artifacts) = (self.work("dkg"), self.artifacts(params)?);
         let proof = prover.proving(|zk| {
-            prove_dkg_aggregation(zk, &input, &work, preset, params.committee_size)
+            prove_dkg_aggregation(zk, &input, &work, &artifacts, params.committee_size)
         })?;
         let proof = proofs::store(&self.blobs, &proof)?;
         let commitment = *proof.public_inputs.last().ok_or(JobError::crypto(

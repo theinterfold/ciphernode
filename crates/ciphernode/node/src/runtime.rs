@@ -20,7 +20,7 @@ use e3_jobs::JobRunner;
 use e3_journal::Journal;
 use e3_p2p::{Inbox, Network};
 use e3_protocol::{
-    node::{Classified, Input, Node},
+    node::{Classified, Input, Node, Scope},
     E3Id, UnixSecs,
 };
 use e3_utils::limited::Limited;
@@ -126,6 +126,11 @@ pub enum NodeError {
         read: u64,
         start_block: u64,
     },
+    #[error(
+        "E3 {e3} has not ended, or still has work, under a BFV profile that this release does not \
+         run ({reason}). Run the release that runs it until it reads the E3's end, then upgrade"
+    )]
+    RetiredProfile { e3: E3Id, reason: String },
 }
 
 /// What the chain says when the reader first catches up.
@@ -162,6 +167,9 @@ where
     let genesis_operator = parts.operator.address();
     let genesis = Node::new(genesis_operator);
     let (mut engine, recovered) = Engine::open(parts.journal, genesis, settings.snapshot_every)?;
+    if let Some((e3, reason)) = retired_profile(engine.machine()) {
+        return Err(NodeError::RetiredProfile { e3, reason });
+    }
     // What was under way at the last stop waits for the chain: an E3 may have moved on meanwhile.
     let mut recovered = Some(recovered);
     sweep(&parts.blobs, engine.machine());
@@ -375,6 +383,19 @@ where
     // has to read.
     outcome?.checkpoint()?;
     Ok(())
+}
+
+/// The first E3 under a BFV profile this release does not run that has not ended, or that still
+/// has crypto or accusation work after its end, and why. Even a request the node only watches can
+/// give it a ticket, and then jobs that could not run here; a profile retires only once all its E3s
+/// have ended. Settling a failed E3 is a chain call, which needs no profile.
+fn retired_profile(machine: &Node) -> Option<(E3Id, String)> {
+    machine.held().find_map(|e3| {
+        let state = machine.e3(e3)?;
+        let owed = machine.owes(e3, Scope::Live) || state.has_work();
+        let refused = e3_jobs::profile(&state.params).err()?;
+        owed.then(|| (*e3, refused.to_string()))
+    })
 }
 
 /// An essential task ended while the node runs: the process should end, so its supervisor can
