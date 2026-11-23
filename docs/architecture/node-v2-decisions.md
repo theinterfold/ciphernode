@@ -59,18 +59,18 @@ Each rule is checkable in review.
   shares. Before that, nothing can say whether a sender may speak, and a libp2p peer ID is not bound
   to an operator, so an attacker can sign as many operator addresses as it likes. This replaces the
   early-key record in `Init`
-  ([dkg](https://github.com/theinterfold/interfold/blob/f9ef94d661e407026c858845975500fa37efc6dc/docs/architecture/dkg.md),
+  ([dkg](https://github.com/theinterfold/interfold/blob/31cd408ea5131de7e700ae3438aecea9000b45bf/docs/architecture/dkg.md),
   key collection row).
 - **D11. Every input first applies the deadlines that have passed.** A tick only wakes the machine,
   so a late wake-up changes nothing: a key check that returns after the key cutoff does not count,
   whether or not the cutoff's tick came first
-  ([dkg](https://github.com/theinterfold/interfold/blob/f9ef94d661e407026c858845975500fa37efc6dc/docs/architecture/dkg.md),
+  ([dkg](https://github.com/theinterfold/interfold/blob/31cd408ea5131de7e700ae3438aecea9000b45bf/docs/architecture/dkg.md),
   "Timing and collection").
 
 - **D12. Ready reports only grow.** A member's later Ready must contain its earlier one; each
   receiver drops expelled dealers itself when it chooses a roster. Today a reporter drops expelled
   dealers, so a receiver that has not seen the expulsion yet must hold the update
-  ([dkg](https://github.com/theinterfold/interfold/blob/f9ef94d661e407026c858845975500fa37efc6dc/docs/architecture/dkg.md),
+  ([dkg](https://github.com/theinterfold/interfold/blob/31cd408ea5131de7e700ae3438aecea9000b45bf/docs/architecture/dkg.md),
   "One H-roster").
 - **D13. One verification job per dealer.** A verdict covers one dealer's exact message, so a
   verdict can never apply to a batch it was not made for, and growth needs no new batch.
@@ -79,7 +79,7 @@ Each rule is checkable in review.
 
 - **D15. Only roster members make a decryption key (C4) and send a keyshare.** Decryption admits
   only roster members' C6 shares
-  ([threshold decryption](https://github.com/theinterfold/interfold/blob/f9ef94d661e407026c858845975500fa37efc6dc/docs/architecture/threshold-decryption.md)),
+  ([threshold decryption](https://github.com/theinterfold/interfold/blob/31cd408ea5131de7e700ae3438aecea9000b45bf/docs/architecture/threshold-decryption.md)),
   and the key aggregates only roster keyshares, so a C4 or keyshare from outside the roster changes
   nothing. Every member still checks the roster members' C4 proofs, so accusations against them can
   reach quorum.
@@ -96,14 +96,14 @@ Each rule is checkable in review.
 - **D18. Decryption takes its authority from the chain.** The key event gives the committee in the
   registry's order, the roster (the selected party IDs in the proof's public inputs), and the key
   commitment; the decryption domain is computed from them and the ciphertext's hash
-  ([threshold decryption](https://github.com/theinterfold/interfold/blob/f9ef94d661e407026c858845975500fa37efc6dc/docs/architecture/threshold-decryption.md),
+  ([threshold decryption](https://github.com/theinterfold/interfold/blob/31cd408ea5131de7e700ae3438aecea9000b45bf/docs/architecture/threshold-decryption.md),
   "Authority before work"). The DKG only supplies this node's sealed decryption key, and only when
   it summed that key over the chain's roster.
 
 - **D19. One re-send rule for every message a node sends.** While the work a message feeds still
   runs at the node, its latest message of each kind goes again after 30 seconds, then at doubling
   intervals up to five minutes, for at most eight hours
-  ([threshold decryption](https://github.com/theinterfold/interfold/blob/f9ef94d661e407026c858845975500fa37efc6dc/docs/architecture/threshold-decryption.md),
+  ([threshold decryption](https://github.com/theinterfold/interfold/blob/31cd408ea5131de7e700ae3438aecea9000b45bf/docs/architecture/threshold-decryption.md),
   "Restart and redelivery limits"). Receivers keep the first copy. This replaces per-phase timers,
   document re-announcement as the only DKG recovery, and the promoted aggregator's roster
   re-proposal.
@@ -111,7 +111,7 @@ Each rule is checkable in review.
 - **D20. Selection reads the node's own registry history.** Activity, ticket balances, bond owners,
   and the identity policy are chain facts with their block times; selection reads them at T−1 for a
   request at T
-  ([committee selection](https://github.com/theinterfold/interfold/blob/f9ef94d661e407026c858845975500fa37efc6dc/docs/architecture/committee-selection.md)).
+  ([committee selection](https://github.com/theinterfold/interfold/blob/31cd408ea5131de7e700ae3438aecea9000b45bf/docs/architecture/committee-selection.md)).
   The node's load limit counts the live E3s it holds a ticket for, so no separate counter can drift.
   Eligibility is the exception: every owner-capped request first asks the bonding registry which
   candidates are eligible at T−1 (`eligibilityAt`), since that rule, with its admission cooldown,
@@ -442,6 +442,17 @@ Each rule is checkable in review.
   `CiphertextOutputReferencePublished` event and `IDataAvailabilityVerifier.DataReference` still
   name Avail's block and leaf, so the chain decoder builds the locator from them; a layer whose
   reference has another shape needs those contract types to carry the locator bytes.
+
+- **D63. A request names its BFV profile by its configuration ID.** Two profiles can share a
+  parameter set, so the parameter set does not name the profile. The machine keeps each request's
+  configuration ID, the chain reader takes only the (parameter set, committee size, ID) triples this
+  release admits, and the job runner finds the profile by its ID for the BFV parameters and the
+  circuit folder. A start refuses a held E3 under a profile the release no longer runs while the E3
+  has not ended, even one the node only watches, which can still give it a ticket, or while it still
+  has crypto or accusation work after its end: run the release that runs the profile until the E3
+  ends. Settling a failed E3 needs no profile. The check reads the saved state before the first
+  input, because a refused start must not leave a journal tail that only it can replay; so an E3
+  that ended while the node was offline needs one run of the previous release to read that end.
 
 ## Problems in the earlier node, with the fix above them
 
