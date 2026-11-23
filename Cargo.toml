@@ -29,24 +29,24 @@ e3-jobs = { version = "0.20.0-dev.3", path = "./crates/ciphernode/jobs" }
 e3-journal = { version = "0.20.0-dev.3", path = "./crates/state/journal" }
 e3-p2p = { version = "0.20.0-dev.3", path = "./crates/ciphernode/p2p" }
 # Shared crates, pinned to one commit of theinterfold/interfold. Bump `rev` on every line together.
-e3-bfv-client = { git = "https://github.com/theinterfold/interfold", rev = "31cd408ea5131de7e700ae3438aecea9000b45bf" }
-e3-ciphernode-config = { git = "https://github.com/theinterfold/interfold", rev = "31cd408ea5131de7e700ae3438aecea9000b45bf" }
-e3-committee = { git = "https://github.com/theinterfold/interfold", rev = "31cd408ea5131de7e700ae3438aecea9000b45bf" }
-e3-committee-hash = { git = "https://github.com/theinterfold/interfold", rev = "31cd408ea5131de7e700ae3438aecea9000b45bf" }
-e3-crypto = { git = "https://github.com/theinterfold/interfold", rev = "31cd408ea5131de7e700ae3438aecea9000b45bf" }
-e3-entrypoint = { git = "https://github.com/theinterfold/interfold", rev = "31cd408ea5131de7e700ae3438aecea9000b45bf" }
-e3-data-availability = { git = "https://github.com/theinterfold/interfold", rev = "31cd408ea5131de7e700ae3438aecea9000b45bf" }
-e3-evm = { git = "https://github.com/theinterfold/interfold", rev = "31cd408ea5131de7e700ae3438aecea9000b45bf" }
-e3-evm-contracts = { git = "https://github.com/theinterfold/interfold", rev = "31cd408ea5131de7e700ae3438aecea9000b45bf" }
-e3-evm-transactions = { git = "https://github.com/theinterfold/interfold", rev = "31cd408ea5131de7e700ae3438aecea9000b45bf" }
-e3-fhe-params = { git = "https://github.com/theinterfold/interfold", rev = "31cd408ea5131de7e700ae3438aecea9000b45bf" }
-e3-polynomial = { git = "https://github.com/theinterfold/interfold", rev = "31cd408ea5131de7e700ae3438aecea9000b45bf" }
-e3-polynomial-fhe = { git = "https://github.com/theinterfold/interfold", rev = "31cd408ea5131de7e700ae3438aecea9000b45bf" }
-e3-trbfv = { git = "https://github.com/theinterfold/interfold", rev = "31cd408ea5131de7e700ae3438aecea9000b45bf" }
-e3-utils = { git = "https://github.com/theinterfold/interfold", rev = "31cd408ea5131de7e700ae3438aecea9000b45bf" }
-e3-zk-config = { git = "https://github.com/theinterfold/interfold", rev = "31cd408ea5131de7e700ae3438aecea9000b45bf" }
-e3-zk-prover = { git = "https://github.com/theinterfold/interfold", rev = "31cd408ea5131de7e700ae3438aecea9000b45bf" }
-e3-zk-witness = { git = "https://github.com/theinterfold/interfold", rev = "31cd408ea5131de7e700ae3438aecea9000b45bf" }
+e3-bfv-client = { git = "https://github.com/theinterfold/interfold", rev = "caae224b1296e329c2857b46056ed2a1214fff78" }
+e3-ciphernode-config = { git = "https://github.com/theinterfold/interfold", rev = "caae224b1296e329c2857b46056ed2a1214fff78" }
+e3-committee = { git = "https://github.com/theinterfold/interfold", rev = "caae224b1296e329c2857b46056ed2a1214fff78" }
+e3-committee-hash = { git = "https://github.com/theinterfold/interfold", rev = "caae224b1296e329c2857b46056ed2a1214fff78" }
+e3-crypto = { git = "https://github.com/theinterfold/interfold", rev = "caae224b1296e329c2857b46056ed2a1214fff78" }
+e3-entrypoint = { git = "https://github.com/theinterfold/interfold", rev = "caae224b1296e329c2857b46056ed2a1214fff78" }
+e3-data-availability = { git = "https://github.com/theinterfold/interfold", rev = "caae224b1296e329c2857b46056ed2a1214fff78" }
+e3-evm = { git = "https://github.com/theinterfold/interfold", rev = "caae224b1296e329c2857b46056ed2a1214fff78" }
+e3-evm-contracts = { git = "https://github.com/theinterfold/interfold", rev = "caae224b1296e329c2857b46056ed2a1214fff78" }
+e3-evm-transactions = { git = "https://github.com/theinterfold/interfold", rev = "caae224b1296e329c2857b46056ed2a1214fff78" }
+e3-fhe-params = { git = "https://github.com/theinterfold/interfold", rev = "caae224b1296e329c2857b46056ed2a1214fff78" }
+e3-polynomial = { git = "https://github.com/theinterfold/interfold", rev = "caae224b1296e329c2857b46056ed2a1214fff78" }
+e3-polynomial-fhe = { git = "https://github.com/theinterfold/interfold", rev = "caae224b1296e329c2857b46056ed2a1214fff78" }
+e3-trbfv = { git = "https://github.com/theinterfold/interfold", rev = "caae224b1296e329c2857b46056ed2a1214fff78" }
+e3-utils = { git = "https://github.com/theinterfold/interfold", rev = "caae224b1296e329c2857b46056ed2a1214fff78" }
+e3-zk-config = { git = "https://github.com/theinterfold/interfold", rev = "caae224b1296e329c2857b46056ed2a1214fff78" }
+e3-zk-prover = { git = "https://github.com/theinterfold/interfold", rev = "caae224b1296e329c2857b46056ed2a1214fff78" }
+e3-zk-witness = { git = "https://github.com/theinterfold/interfold", rev = "caae224b1296e329c2857b46056ed2a1214fff78" }
 
 # External crates, as in theinterfold/interfold.
 
